@@ -1,48 +1,36 @@
-# Déploiement Vercel — adapter la config
+# Ajouter `vercel.json` pour figer la config de déploiement
 
-## Pourquoi le 404
+## Pourquoi
 
-Le projet est actuellement buildé pour **Cloudflare Workers** (preset Nitro par défaut + wrapper SSR `src/server.ts` qui utilise la signature Worker `fetch(request, env, ctx)`). Vercel ne trouve pas la structure `.vercel/output/` qu'il attend, donc toutes les routes retournent 404.
+L'UI Vercel pré-remplit `Output Directory = dist` par défaut. Or notre build (Nitro preset `vercel`) émet vers `.vercel/output/` selon le format **Build Output API** de Vercel. Si on laisse `dist`, Vercel cherche au mauvais endroit → 404.
 
-## Changements
+Un fichier `vercel.json` à la racine override ces réglages d'UI et garantit que chaque déploiement utilise la bonne config — pas besoin de toucher l'UI Vercel.
 
-### 1. `vite.config.ts` — cibler Vercel
-Ajouter le preset Nitro `vercel` pour que le build génère `.vercel/output/` (format que Vercel détecte automatiquement) :
+## Fichier à créer
 
-```ts
-import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+`vercel.json` à la racine du projet :
 
-export default defineConfig({
-  tanstackStart: {
-    server: { entry: "server" },
-  },
-  nitro: {
-    preset: "vercel",
-  },
-});
+```json
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "bun run build",
+  "installCommand": "bun install",
+  "outputDirectory": ".vercel/output"
+}
 ```
 
-### 2. `src/server.ts` — rendre le wrapper compatible Vercel
-Le wrapper actuel exporte `{ fetch(request, env, ctx) }` (format Cloudflare Worker). Sur Vercel (Node runtime), Nitro attend une fonction handler standard. Deux options :
-
-- **Option A (simple)** : retirer l'override `server.entry` de `vite.config.ts` et laisser TanStack Start utiliser son entry par défaut. On perd le wrapper anti-500 (utile sur Cloudflare) mais Vercel a déjà son propre logging d'erreurs SSR — c'est acceptable.
-- **Option B** : garder `src/server.ts` mais le réécrire en handler isomorphe compatible Node/Vercel.
-
-Je recommande **Option A** : plus fiable, moins de surface de bug, Vercel affiche les erreurs SSR dans son dashboard.
-
-### 3. Fichier `vercel.json` (optionnel)
-Pas nécessaire — Nitro preset `vercel` génère tout ce qu'il faut. À ajouter seulement si on veut forcer des headers ou redirections.
+- `framework: null` → équivaut à "Other" (empêche Vercel de présumer Vite/Next).
+- `outputDirectory: ".vercel/output"` → pointe vers ce que Nitro génère.
+- Build & install commands explicites (pas besoin de cocher d'override dans l'UI).
 
 ## Côté Vercel (toi)
 
-Après que je pousse les changements et que tu re-push sur GitHub :
-1. Dans Vercel → Project Settings → **Build & Output Settings** : laisser tout en "Auto-detect" (Vercel reconnaîtra le preset Nitro).
-2. **Framework Preset** : `Other` (ne pas choisir Vite — ça casserait le SSR).
-3. **Build Command** : `bun run build` (ou laisser par défaut).
-4. **Output Directory** : laisser vide (Nitro écrit dans `.vercel/output/` que Vercel détecte automatiquement).
-5. Redéployer.
+Après push :
+1. Va dans **Project Settings → Build & Output Settings**.
+2. Décoche tous les "Override" si tu en avais activés — `vercel.json` prend le relais.
+3. **Redeploy** (ou push un commit).
 
-## À noter
+## Aucune autre modif
 
-- Aucune logique métier ne change : calculateur de devis, lien WhatsApp, design, contenu — tout reste identique.
-- Si tu préfères zéro config et un déploiement instantané, le bouton **Publish** de Lovable reste l'option la plus simple (et tu peux brancher ton domaine dessus).
+Le code de l'app, `vite.config.ts` (déjà avec preset Vercel), et le contenu ne changent pas.
