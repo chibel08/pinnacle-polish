@@ -158,9 +158,6 @@ function Index() {
       <header className="fixed top-0 left-0 right-0 z-50 glass">
         <div className="mx-auto max-w-7xl px-6 py-4 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
           <a href="#top" className="flex items-center gap-3 min-w-0">
-            <div className="shrink-0 grid place-items-center w-10 h-10 rounded-md" style={{ background: "var(--gradient-gold)" }}>
-              <Sparkles className="w-5 h-5 text-background" />
-            </div>
             <div className="min-w-0">
               <div className="font-display text-xl tracking-wider truncate">CLEAN CAR <span className="text-[var(--gold)]">DETAILING</span></div>
               <div className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground hidden sm:block">Premium · Belgique</div>
@@ -573,10 +570,7 @@ function Index() {
       <footer className="relative border-t border-border bg-[var(--anthracite)]/50 px-6 py-16">
         <div className="mx-auto max-w-7xl grid md:grid-cols-3 gap-10">
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="grid place-items-center w-10 h-10 rounded-md" style={{ background: "var(--gradient-gold)" }}>
-                <Sparkles className="w-5 h-5 text-background" />
-              </div>
+            <div className="mb-4">
               <div className="font-display text-xl tracking-wider">CLEAN CAR <span className="text-[var(--gold)]">DETAILING</span></div>
             </div>
             <p className="text-sm text-muted-foreground">Detailing automobile premium à domicile partout en Belgique.</p>
