@@ -599,7 +599,7 @@ function Index() {
       </footer>
 
       {/* WhatsApp floating */}
-      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" aria-label="Contactez-nous sur WhatsApp"
+      <a href={whatsappBase} target="_blank" rel="noopener noreferrer" aria-label="Contactez-nous sur WhatsApp"
         className="fixed bottom-6 right-6 z-50 group flex items-center gap-3">
         <span className="hidden md:inline-block px-4 py-2 rounded-full glass text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition">
           Contactez-nous sur WhatsApp
