@@ -403,17 +403,23 @@ function Index() {
                   <stop offset="100%" stopColor="#C9A86A" stopOpacity="0.05" />
                 </linearGradient>
               </defs>
-              {/* Stylized Belgium silhouette */}
-              <path d="M80 120 L130 90 L180 100 L220 80 L280 95 L330 130 L340 180 L320 240 L290 290 L240 320 L180 330 L120 310 L80 270 L60 210 Z"
-                fill="url(#g)" stroke="#C9A86A" strokeWidth="1.5" />
+              {/* Belgium silhouette (approx. geographic outline) */}
+              <path
+                d="M24.6,94.5 L100.3,42.4 L195.3,20.6 L256.2,22.4 L329.2,83.6 L357.8,146.6 L380,233 L326.4,373 L292.3,380 L237.1,327.6 L170.3,294.8 L127,201.4 L91,194.2 L50.4,161.8 L23.7,141.6 Z"
+                fill="url(#g)"
+                stroke="#C9A86A"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+              />
               {[
-                { x: 200, y: 200, name: "Liège", big: true },
-                { x: 240, y: 210, name: "Verviers", big: true },
-                { x: 130, y: 160, name: "Bruxelles" },
-                { x: 180, y: 260, name: "Namur" },
-                { x: 150, y: 290, name: "Charleroi" },
-                { x: 130, y: 310, name: "Mons" },
-                { x: 150, y: 200, name: "Louvain" },
+                { x: 303, y: 177, name: "Liège", big: true },
+                { x: 330, y: 184, name: "Verviers", big: true },
+                { x: 191, y: 137, name: "Bruxelles" },
+                { x: 239, y: 205, name: "Namur" },
+                { x: 199, y: 216, name: "Charleroi" },
+                { x: 154, y: 209, name: "Mons" },
+                { x: 223, y: 132, name: "Louvain" },
+
               ].map((c) => (
                 <g key={c.name}>
                   <circle cx={c.x} cy={c.y} r={c.big ? 8 : 5} fill="#C9A86A">
