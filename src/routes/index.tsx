@@ -399,7 +399,7 @@ function Index() {
               {total}<span className="gold-text">€</span>
             </div>
             <p className="text-xs text-muted-foreground mb-8">Ce devis est fourni à titre indicatif.</p>
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn-gold btn-gold-hover w-full justify-center">
+            <a href={whatsappDevisLink} target="_blank" rel="noopener noreferrer" className="btn-gold btn-gold-hover w-full justify-center">
               <MessageCircle className="w-4 h-4" /> Demander sur WhatsApp
             </a>
             <div className="mt-6 pt-6 border-t border-border space-y-1 text-sm text-muted-foreground">
