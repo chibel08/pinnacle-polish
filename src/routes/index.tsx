@@ -528,7 +528,22 @@ function Index() {
             </div>
           </div>
 
-          <form className="glass rounded-2xl p-10 space-y-4" onSubmit={(e) => { e.preventDefault(); window.location.href = whatsappLink; }}>
+          <form className="glass rounded-2xl p-10 space-y-4" onSubmit={(e) => {
+            e.preventDefault();
+            const fd = new FormData(e.currentTarget);
+            const lines = [
+              "Bonjour Clean Car Detailing,",
+              "Je souhaite faire une demande :",
+              `• Nom : ${fd.get("name")}`,
+              `• Téléphone : ${fd.get("phone")}`,
+              `• Véhicule : ${fd.get("vehicle")}`,
+              `• Prestation : ${fd.get("service")}`,
+              `• Ville : ${fd.get("city")}`,
+              "",
+              `Message : ${fd.get("message")}`,
+            ];
+            window.open(`${whatsappBase}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank", "noopener,noreferrer");
+          }}>
             <h3 className="font-display text-3xl mb-2 tracking-wider">Envoyez votre demande</h3>
             {[
               { name: "name", placeholder: "Nom complet", type: "text" },
@@ -540,7 +555,7 @@ function Index() {
               <input key={f.name} {...f} required
                 className="w-full bg-transparent border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-[var(--gold)] focus:outline-none transition" />
             ))}
-            <textarea placeholder="Votre message" rows={4} required
+            <textarea name="message" placeholder="Votre message" rows={4} required
               className="w-full bg-transparent border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-[var(--gold)] focus:outline-none transition resize-none" />
             <button type="submit" className="btn-gold btn-gold-hover w-full justify-center">
               Envoyer ma demande <ChevronRight className="w-4 h-4" />
