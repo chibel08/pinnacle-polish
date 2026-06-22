@@ -586,8 +586,12 @@ function Index() {
             ))}
           </nav>
           <div className="flex md:justify-end items-start gap-3">
-            {[Instagram, Facebook, Music2].map((I, i) => (
-              <a key={i} href="#" className="grid place-items-center w-10 h-10 rounded-full glass hover:bg-[var(--gold)] hover:text-background transition">
+            {[
+              { I: Instagram, l: "Instagram", href: "https://instagram.com/cleancardetailing17" },
+              { I: Facebook, l: "Facebook", href: "https://www.facebook.com/people/Clean-Car-Detailing/" },
+              { I: Music2, l: "TikTok", href: "https://www.tiktok.com/@cleancardetailing17" },
+            ].map(({ I, l, href }) => (
+              <a key={l} href={href} target="_blank" rel="noopener noreferrer" aria-label={l} className="grid place-items-center w-10 h-10 rounded-full glass hover:bg-[var(--gold)] hover:text-background transition">
                 <I className="w-4 h-4" />
               </a>
             ))}
