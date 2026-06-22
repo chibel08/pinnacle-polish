@@ -395,41 +395,13 @@ function Index() {
       {/* ZONE */}
       <Section id="zone" eyebrow="Zone d'intervention" title={<>Nous venons <span className="gold-text">chez vous</span></>}>
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="glass rounded-2xl p-10 aspect-square relative overflow-hidden">
-            <svg viewBox="0 0 400 400" className="absolute inset-0 w-full h-full p-10 opacity-90">
-              <defs>
-                <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#C9A86A" stopOpacity="0.3" />
-                  <stop offset="100%" stopColor="#C9A86A" stopOpacity="0.05" />
-                </linearGradient>
-              </defs>
-              {/* Belgium silhouette (approx. geographic outline) */}
-              <path
-                d="M24.6,94.5 L100.3,42.4 L195.3,20.6 L256.2,22.4 L329.2,83.6 L357.8,146.6 L380,233 L326.4,373 L292.3,380 L237.1,327.6 L170.3,294.8 L127,201.4 L91,194.2 L50.4,161.8 L23.7,141.6 Z"
-                fill="url(#g)"
-                stroke="#C9A86A"
-                strokeWidth="1.5"
-                strokeLinejoin="round"
-              />
-              {[
-                { x: 303, y: 177, name: "Liège", big: true },
-                { x: 330, y: 184, name: "Verviers", big: true },
-                { x: 191, y: 137, name: "Bruxelles" },
-                { x: 239, y: 205, name: "Namur" },
-                { x: 199, y: 216, name: "Charleroi" },
-                { x: 154, y: 209, name: "Mons" },
-                { x: 223, y: 132, name: "Louvain" },
-
-              ].map((c) => (
-                <g key={c.name}>
-                  <circle cx={c.x} cy={c.y} r={c.big ? 8 : 5} fill="#C9A86A">
-                    <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite" />
-                  </circle>
-                  {c.big && <circle cx={c.x} cy={c.y} r="14" fill="none" stroke="#C9A86A" strokeWidth="1" opacity="0.4" />}
-                  <text x={c.x + 12} y={c.y + 4} fontSize={c.big ? 14 : 11} fill="#F5F5F2" fontFamily="Inter">{c.name}</text>
-                </g>
-              ))}
-            </svg>
+          <div className="glass rounded-2xl p-6 md:p-10 relative overflow-hidden flex items-center justify-center">
+            <img
+              src={belgiumMap}
+              alt="Carte de la Belgique avec les villes desservies : Liège, Verviers, Bruxelles, Namur, Charleroi, Mons"
+              loading="lazy"
+              className="w-full h-auto object-contain"
+            />
           </div>
 
           <div>
