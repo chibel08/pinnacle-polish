@@ -115,6 +115,7 @@ function Index() {
   const [tarifsVehicle, setTarifsVehicle] = useState<Vehicle>("berline");
   const [service, setService] = useState<"ext" | "int" | "pack">("pack");
   const [extras, setExtras] = useState<Set<string>>(new Set());
+  const [address, setAddress] = useState("");
 
   const toggleExtra = (k: string) => {
     setExtras((prev) => {
@@ -130,7 +131,10 @@ function Index() {
     return t;
   }, [vehicle, service, extras]);
 
-  const whatsappLink = useMemo(() => {
+  const whatsappPhone = "32499184971";
+  const whatsappBase = `https://wa.me/${whatsappPhone}`;
+
+  const whatsappDevisLink = useMemo(() => {
     const lines = [
       "Bonjour Clean Car Detailing,",
       "Je souhaite un devis :",
@@ -141,9 +145,12 @@ function Index() {
     if (sel.length) {
       lines.push(`• Options : ${sel.map((o) => o.label).join(", ")}`);
     }
+    if (address.trim()) {
+      lines.push(`• Adresse : ${address.trim()}`);
+    }
     lines.push(`• Estimation totale : ${total} €`);
-    return `https://wa.me/32499184971?text=${encodeURIComponent(lines.join("\n"))}`;
-  }, [vehicle, service, extras, total]);
+    return `${whatsappBase}?text=${encodeURIComponent(lines.join("\n"))}`;
+  }, [vehicle, service, extras, total, address]);
 
   return (
     <div className="min-h-screen text-foreground">
