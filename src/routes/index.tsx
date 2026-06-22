@@ -600,8 +600,8 @@ function Index() {
         <div className="mx-auto max-w-7xl mt-10 pt-6 border-t border-border flex flex-wrap justify-between gap-4 text-xs text-muted-foreground">
           <span>© 2026 Clean Car Detailing — Service à domicile partout en Belgique</span>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-[var(--gold)]">Mentions légales</a>
-            <a href="#" className="hover:text-[var(--gold)]">Politique de confidentialité</a>
+            <Link to="/mentions-legales" className="hover:text-[var(--gold)]">Mentions légales</Link>
+            <Link to="/confidentialite" className="hover:text-[var(--gold)]">Politique de confidentialité</Link>
           </div>
         </div>
       </footer>
