@@ -460,7 +460,7 @@ function Index() {
       {/* GALERIE */}
       <Section id="galerie" eyebrow="Avant / Après" title={<>Notre <span className="gold-text">galerie</span></>}>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          {[g1, g2, g3, g4, g5, g6].map((src, i) => (
+          {[g2, g3, g4, g5, g6].map((src, i) => (
             <div key={i} className="relative aspect-square overflow-hidden rounded-xl group">
               <img src={src} alt={`Detailing automobile photo ${i + 1}`} loading="lazy" width={1024} height={1024}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
