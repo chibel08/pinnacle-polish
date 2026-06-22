@@ -381,6 +381,16 @@ function Index() {
                 })}
               </div>
             </Step>
+
+            <Step n={4} label="Adresse d'intervention">
+              <input
+                type="text"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Rue, numéro, code postal, ville"
+                className="w-full bg-transparent border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-[var(--gold)] focus:outline-none transition"
+              />
+            </Step>
           </div>
 
           <aside className="lg:sticky lg:top-28 self-start glass rounded-2xl p-8 text-center">
