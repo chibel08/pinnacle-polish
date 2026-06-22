@@ -115,6 +115,7 @@ function Index() {
   const [tarifsVehicle, setTarifsVehicle] = useState<Vehicle>("berline");
   const [service, setService] = useState<"ext" | "int" | "pack">("pack");
   const [extras, setExtras] = useState<Set<string>>(new Set());
+  const [address, setAddress] = useState("");
 
   const toggleExtra = (k: string) => {
     setExtras((prev) => {
@@ -130,7 +131,10 @@ function Index() {
     return t;
   }, [vehicle, service, extras]);
 
-  const whatsappLink = useMemo(() => {
+  const whatsappPhone = "32499184971";
+  const whatsappBase = `https://wa.me/${whatsappPhone}`;
+
+  const whatsappDevisLink = useMemo(() => {
     const lines = [
       "Bonjour Clean Car Detailing,",
       "Je souhaite un devis :",
@@ -141,9 +145,12 @@ function Index() {
     if (sel.length) {
       lines.push(`• Options : ${sel.map((o) => o.label).join(", ")}`);
     }
+    if (address.trim()) {
+      lines.push(`• Adresse : ${address.trim()}`);
+    }
     lines.push(`• Estimation totale : ${total} €`);
-    return `https://wa.me/32499184971?text=${encodeURIComponent(lines.join("\n"))}`;
-  }, [vehicle, service, extras, total]);
+    return `${whatsappBase}?text=${encodeURIComponent(lines.join("\n"))}`;
+  }, [vehicle, service, extras, total, address]);
 
   return (
     <div className="min-h-screen text-foreground">
@@ -374,6 +381,16 @@ function Index() {
                 })}
               </div>
             </Step>
+
+            <Step n={4} label="Adresse d'intervention">
+              <input
+                type="text"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Rue, numéro, code postal, ville"
+                className="w-full bg-transparent border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-[var(--gold)] focus:outline-none transition"
+              />
+            </Step>
           </div>
 
           <aside className="lg:sticky lg:top-28 self-start glass rounded-2xl p-8 text-center">
@@ -382,7 +399,7 @@ function Index() {
               {total}<span className="gold-text">€</span>
             </div>
             <p className="text-xs text-muted-foreground mb-8">Ce devis est fourni à titre indicatif.</p>
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn-gold btn-gold-hover w-full justify-center">
+            <a href={whatsappDevisLink} target="_blank" rel="noopener noreferrer" className="btn-gold btn-gold-hover w-full justify-center">
               <MessageCircle className="w-4 h-4" /> Demander sur WhatsApp
             </a>
             <div className="mt-6 pt-6 border-t border-border space-y-1 text-sm text-muted-foreground">
@@ -511,7 +528,22 @@ function Index() {
             </div>
           </div>
 
-          <form className="glass rounded-2xl p-10 space-y-4" onSubmit={(e) => { e.preventDefault(); window.location.href = whatsappLink; }}>
+          <form className="glass rounded-2xl p-10 space-y-4" onSubmit={(e) => {
+            e.preventDefault();
+            const fd = new FormData(e.currentTarget);
+            const lines = [
+              "Bonjour Clean Car Detailing,",
+              "Je souhaite faire une demande :",
+              `• Nom : ${fd.get("name")}`,
+              `• Téléphone : ${fd.get("phone")}`,
+              `• Véhicule : ${fd.get("vehicle")}`,
+              `• Prestation : ${fd.get("service")}`,
+              `• Ville : ${fd.get("city")}`,
+              "",
+              `Message : ${fd.get("message")}`,
+            ];
+            window.open(`${whatsappBase}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank", "noopener,noreferrer");
+          }}>
             <h3 className="font-display text-3xl mb-2 tracking-wider">Envoyez votre demande</h3>
             {[
               { name: "name", placeholder: "Nom complet", type: "text" },
@@ -523,7 +555,7 @@ function Index() {
               <input key={f.name} {...f} required
                 className="w-full bg-transparent border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-[var(--gold)] focus:outline-none transition" />
             ))}
-            <textarea placeholder="Votre message" rows={4} required
+            <textarea name="message" placeholder="Votre message" rows={4} required
               className="w-full bg-transparent border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-[var(--gold)] focus:outline-none transition resize-none" />
             <button type="submit" className="btn-gold btn-gold-hover w-full justify-center">
               Envoyer ma demande <ChevronRight className="w-4 h-4" />
@@ -567,7 +599,7 @@ function Index() {
       </footer>
 
       {/* WhatsApp floating */}
-      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" aria-label="Contactez-nous sur WhatsApp"
+      <a href={whatsappBase} target="_blank" rel="noopener noreferrer" aria-label="Contactez-nous sur WhatsApp"
         className="fixed bottom-6 right-6 z-50 group flex items-center gap-3">
         <span className="hidden md:inline-block px-4 py-2 rounded-full glass text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition">
           Contactez-nous sur WhatsApp
