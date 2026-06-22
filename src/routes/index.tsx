@@ -469,8 +469,8 @@ function Index() {
           ))}
         </div>
         <div className="text-center mt-10">
-          <a href="https://instagram.com/cleancardetailing" target="_blank" rel="noopener noreferrer" className="btn-outline-gold hover:bg-[var(--gold)] hover:text-background">
-            <Instagram className="w-4 h-4" /> Voir plus sur Instagram @cleancardetailing
+          <a href="https://instagram.com/cleancardetailing17" target="_blank" rel="noopener noreferrer" className="btn-outline-gold hover:bg-[var(--gold)] hover:text-background">
+            <Instagram className="w-4 h-4" /> Voir plus sur Instagram @cleancardetailing17
           </a>
         </div>
       </Section>
