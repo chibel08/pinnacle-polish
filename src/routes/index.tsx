@@ -239,7 +239,7 @@ function Index() {
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-xs tracking-[0.3em] uppercase text-muted-foreground/70 flex flex-col items-center gap-2">
+        <div className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 text-xs tracking-[0.3em] uppercase text-muted-foreground/70 flex-col items-center gap-2">
           <span>Découvrir</span>
           <span className="w-px h-12 bg-gradient-to-b from-[var(--gold)] to-transparent" />
         </div>
