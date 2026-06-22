@@ -414,12 +414,13 @@ function Index() {
       {/* ZONE */}
       <Section id="zone" eyebrow="Zone d'intervention" title={<>Nous venons <span className="gold-text">chez vous</span></>}>
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="glass rounded-2xl p-6 md:p-10 relative overflow-hidden flex items-center justify-center">
+          <div className="glass rounded-2xl p-4 sm:p-6 md:p-10 relative flex items-center justify-center min-h-[280px]">
             <img
               src={belgiumMap}
               alt="Carte de la Belgique avec les villes desservies : Liège, Verviers, Bruxelles, Namur, Charleroi, Mons"
-              loading="lazy"
-              className="w-full h-auto object-contain"
+              width={800}
+              height={900}
+              className="block w-full max-w-full h-auto object-contain"
             />
           </div>
 
