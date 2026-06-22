@@ -156,10 +156,10 @@ function Index() {
     <div className="min-h-screen text-foreground">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 glass">
-        <div className="mx-auto max-w-7xl px-6 py-4 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 sm:py-4 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
           <a href="#top" className="flex items-center gap-3 min-w-0">
             <div className="min-w-0">
-              <div className="font-display text-xl tracking-wider truncate">CLEAN CAR <span className="text-[var(--gold)]">DETAILING</span></div>
+              <div className="font-display text-base sm:text-xl tracking-wider whitespace-nowrap">CLEAN CAR <span className="text-[var(--gold)]">DETAILING</span></div>
               <div className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground hidden sm:block">Premium · Belgique</div>
             </div>
           </a>
@@ -173,7 +173,7 @@ function Index() {
             <a href="tel:0499184971" className="hidden md:inline-flex items-center gap-2 text-sm text-foreground hover:text-[var(--gold)] transition">
               <Phone className="w-4 h-4" /> 0499 18 49 71
             </a>
-            <a href="#devis" className="btn-gold btn-gold-hover !py-2.5 !px-4 text-xs">Devis</a>
+            <a href="#devis" className="btn-gold btn-gold-hover !py-2 !px-3 sm:!py-2.5 sm:!px-4 text-xs">Devis</a>
           </div>
         </div>
       </header>
