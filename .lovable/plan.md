@@ -1,36 +1,23 @@
-# Ajouter `vercel.json` pour figer la config de déploiement
+## Problème
 
-## Pourquoi
+Le « ? » bleu sur iPhone est l'icône d'image cassée de Safari iOS. La carte actuelle (`belgium-map.png`, 781 KB) est un PNG haute résolution. Safari iOS impose une limite de mémoire de décodage d'image (~5 mégapixels sur les anciens iPhone, parfois moins selon la RAM disponible). Au-delà, l'image n'est tout simplement pas rendue — exactement le symptôme observé. Le format PNG, non compressé pour les photos/illustrations complexes, aggrave le problème.
 
-L'UI Vercel pré-remplit `Output Directory = dist` par défaut. Or notre build (Nitro preset `vercel`) émet vers `.vercel/output/` selon le format **Build Output API** de Vercel. Si on laisse `dist`, Vercel cherche au mauvais endroit → 404.
+## Solution
 
-Un fichier `vercel.json` à la racine override ces réglages d'UI et garantit que chaque déploiement utilise la bonne config — pas besoin de toucher l'UI Vercel.
+Régénérer l'asset en version optimisée pour le web :
 
-## Fichier à créer
+1. Convertir la carte en **JPEG** (ou WebP) à une largeur max de **1200 px** — largement suffisant pour un affichage net jusqu'au Retina sur desktop, puisque le conteneur fait au plus ~600 px d'affichage.
+2. Uploader la nouvelle version via `lovable-assets` et remplacer le pointeur `src/assets/belgium-map.png.asset.json`.
+3. Supprimer l'ancien asset CDN (devenu inutile).
+4. Garder le code JSX inchangé (l'import lit toujours `.url` depuis le JSON).
 
-`vercel.json` à la racine du projet :
+## Détails techniques
 
-```json
-{
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": null,
-  "buildCommand": "bun run build",
-  "installCommand": "bun install",
-  "outputDirectory": ".vercel/output"
-}
-```
+- Utilisation de `imagegen--edit_image` pour rééchantillonner la carte existante en JPEG 1200 px de large (compression ~85, ~150–250 KB attendus).
+- `lovable-assets create --file <jpeg> --filename belgium-map.jpg` → écraser `src/assets/belgium-map.png.asset.json` avec le nouveau pointeur (le nom de fichier dans le JSON change, le composant ne s'en soucie pas car il lit `.url`).
+- Suppression du précédent asset PNG via `delete_asset`.
+- Vérification mobile via Playwright (viewport 390 px) que `naturalWidth > 0`.
 
-- `framework: null` → équivaut à "Other" (empêche Vercel de présumer Vite/Next).
-- `outputDirectory: ".vercel/output"` → pointe vers ce que Nitro génère.
-- Build & install commands explicites (pas besoin de cocher d'override dans l'UI).
+## Résultat attendu
 
-## Côté Vercel (toi)
-
-Après push :
-1. Va dans **Project Settings → Build & Output Settings**.
-2. Décoche tous les "Override" si tu en avais activés — `vercel.json` prend le relais.
-3. **Redeploy** (ou push un commit).
-
-## Aucune autre modif
-
-Le code de l'app, `vite.config.ts` (déjà avec preset Vercel), et le contenu ne changent pas.
+Carte affichée correctement sur iPhone, chargement plus rapide sur tous les appareils, qualité visuelle identique à l'œil.
